@@ -15,7 +15,7 @@ import {
   closeTabs
 } from 'providers/ReduxStore/slices/collections/actions';
 import { findCollectionByUid, findItemInCollection } from 'utils/collections';
-import { addTab, reorderTabs, switchTab } from 'providers/ReduxStore/slices/tabs';
+import { addTab, reorderTabs, switchTab, updateResponsePaneTab } from 'providers/ReduxStore/slices/tabs';
 import { toggleSidebarCollapse } from 'providers/ReduxStore/slices/app';
 import { getKeyBindingsForActionAllOS } from './keyMappings';
 
@@ -92,6 +92,13 @@ export const HotkeysProvider = (props) => {
                 return;
               }
             }
+
+            dispatch(
+              updateResponsePaneTab({
+                uid: item.uid,
+                responsePaneTab: 'response'
+              })
+            );
 
             dispatch(sendRequest(item, collection.uid)).catch((err) =>
               toast.custom((t) => <NetworkError onClose={() => toast.dismiss(t.id)} />, {
